@@ -23,7 +23,7 @@ contract Account {
         address accountNumber;
     }
 
-    mapping(address => Account) public accounts;
+    mapping(address => AccountStruct) public accounts;
     mapping(address => uint) public balances;
 
     modifier onlyOwner {
@@ -31,14 +31,11 @@ contract Account {
         _;
     }
 
-    function createAccount(Account _account) public {
+    function createAccount(AccountStruct memory _account) public {
+        require(balances[msg.sender] == 0, "User exists");
         accounts[msg.sender] = _account;
     }
 
-    // function createAccount2(string _name) public {
-    //     account = 
-    //     accounts[msg.sender] = _account;
-    // }
 
     function getBalance() public view returns (uint) {
         return balances[msg.sender];
